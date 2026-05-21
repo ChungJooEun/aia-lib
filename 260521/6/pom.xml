@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!--
+        ============================================================
+        [목적] CVE-2026-40973 대응 - Spring Boot 3.4.10 → 3.4.16 버전업
+        [용도] 폐쇄망 Nexus(Maven 레포지토리)에서 의존성 다운로드 전용 pom.xml
+               실제 빌드/패키징 용도가 아니므로 packaging은 pom으로 설정
+        ============================================================
+    -->
+
+	<groupId>com.example</groupId>
+	<artifactId>demo</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>demo-gateway</name>
+	<description>Demo project for Spring Boot</description>
+
+	<!-- ============================================================ -->
+	<!-- Spring Boot Parent BOM: 3.4.16 (CVE-2026-40973 fix 버전)     -->
+	<!-- ============================================================ -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.4.10</version>
+		<relativePath/>
+	</parent>
+
+	<properties>
+		<java.version>21</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- CVE-2026-42587 조치: Netty 버전 오버라이드 -->
+		<netty.version>4.1.133.Final</netty.version>
+
+		<!-- CVE-2026-22748 조치: Spring Security 버전 오버라이드 -->
+		<spring-security.version>6.5.10</spring-security.version>
+
+		<spring-webflux.version>6.2.18</spring-webflux.version>
+
+		<!-- Spring Cloud BOM 버전 (Spring Boot 3.4.x 호환) -->
+		<spring-cloud.version>2024.0.1</spring-cloud.version>
+
+		<!-- Spring Cloud Azure BOM 버전 (Spring Boot 3.4.x 호환) -->
+		<spring-cloud-azure.version>6.0.0</spring-cloud-azure.version>
+
+		<!--
+            ※ 아래 버전들은 기존 3.4.10 환경과 동일하게 유지
+              (Spring Boot parent BOM이 관리하는 버전과 충돌 시
+               아래 명시 버전이 우선 적용됨 — <dependencyManagement> 활용)
+        -->
+		<json-smart.version>2.5.2</json-smart.version>
+		<xmlunit.version>2.10.0</xmlunit.version>
+		<lombok.version>1.18.30</lombok.version>
+		<mybatis-spring-boot.version>3.0.3</mybatis-spring-boot.version>
+		<aspectjweaver.version>1.9.9.1</aspectjweaver.version>
+		<hikaricp.version>5.0.1</hikaricp.version>
+		<slf4j.version>2.0.13</slf4j.version>
+		<h2.version>2.3.232</h2.version>
+		<postgresql.version>42.7.11</postgresql.version>
+		<jackson.version>2.18.6</jackson.version>
+	</properties>
+
+	<!-- ============================================================ -->
+	<!-- BOM Import (버전 중앙 관리)                                    -->
+	<!-- ============================================================ -->
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- Spring Cloud BOM -->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- Spring Cloud Azure BOM -->
+			<dependency>
+				<groupId>com.azure.spring</groupId>
+				<artifactId>spring-cloud-azure-dependencies</artifactId>
+				<version>${spring-cloud-azure.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- Jackson 버전 고정 (BOM 관리 버전 override) -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+
+			<!-- HikariCP 버전 고정 -->
+			<dependency>
+				<groupId>com.zaxxer</groupId>
+				<artifactId>HikariCP</artifactId>
+				<version>${hikaricp.version}</version>
+			</dependency>
+
+			<!-- SLF4J 버전 고정 -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+
+			<!-- H2 버전 고정 -->
+			<dependency>
+				<groupId>com.h2database</groupId>
+				<artifactId>h2</artifactId>
+				<version>${h2.version}</version>
+			</dependency>
+
+			<!-- PostgreSQL 버전 고정 -->
+			<dependency>
+				<groupId>org.postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>${postgresql.version}</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<!-- ============================================================ -->
+	<!-- Dependencies                                                  -->
+	<!-- ============================================================ -->
+	<dependencies>
+
+		<!-- ── Spring Boot Starters ─────────────────────────────── -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+		</dependency>
+
+		<!--
+            원본: spring-boot-starter-data-redus-reactive (오타)
+            수정: spring-boot-starter-data-redis-reactive
+        -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+		</dependency>
+
+		<!-- ── Spring Security ───────────────────────────────────── -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-crypto</artifactId>
+		</dependency>
+
+		<!-- ── Spring Cloud Gateway ─────────────────────────────── -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-gateway</artifactId>
+		</dependency>
+
+		<!-- ── Spring Cloud Azure KeyVault ──────────────────────── -->
+		<dependency>
+			<groupId>com.azure.spring</groupId>
+			<artifactId>spring-cloud-azure-starter-keyvault-secrets</artifactId>
+		</dependency>
+
+		<!-- ── JSON / XML ───────────────────────────────────────── -->
+		<!--
+            원본: net.mindev:json-smart (minidev 오타)
+            수정: net.minidev:json-smart
+        -->
+		<dependency>
+			<groupId>net.minidev</groupId>
+			<artifactId>json-smart</artifactId>
+			<version>${json-smart.version}</version>
+		</dependency>
+
+		<!--
+            원본: org.xmlunit:xlunit-core (오타)
+            수정: org.xmlunit:xmlunit-core
+        -->
+		<dependency>
+			<groupId>org.xmlunit</groupId>
+			<artifactId>xmlunit-core</artifactId>
+			<version>${xmlunit.version}</version>
+		</dependency>
+
+		<!-- ── Jackson ──────────────────────────────────────────── -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+
+		<!--
+            원본: jackson-annotations:2.28.6 → 존재하지 않는 버전
+            수정: 2.18.6 (jackson-databind, jackson-core 와 동일 버전으로 통일)
+        -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+		</dependency>
+
+		<!-- ── Lombok ───────────────────────────────────────────── -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- ── MyBatis ──────────────────────────────────────────── -->
+		<!--
+            원본: org.mybatis:spring.boot:mybatis-spring-boot-starter (groupId/artifactId 혼용 오타)
+            수정: org.mybatis.spring.boot:mybatis-spring-boot-starter
+        -->
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>${mybatis-spring-boot.version}</version>
+		</dependency>
+
+		<!-- ── AOP ──────────────────────────────────────────────── -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectjweaver.version}</version>
+		</dependency>
+
+		<!-- ── Database / Connection Pool ───────────────────────── -->
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- ── Logging ──────────────────────────────────────────── -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<!--	gradle	-->
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/org.springframework.boot.gradle.plugin -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>org.springframework.boot.gradle.plugin</artifactId>
+			<version>3.4.10</version>
+			<type>pom</type>
+		</dependency>
+
+	</dependencies>
+
+	<!-- ============================================================ -->
+	<!-- Nexus 사내 레포지토리 설정 (실제 URL로 교체 필요)              -->
+	<!-- ============================================================ -->
+	<repositories>
+		<repository>
+			<id>nexus-releases</id>
+			<name>Nexus Release Repository</name>
+			<url>http://your-nexus-host/repository/maven-public/</url>
+			<releases><enabled>true</enabled></releases>
+			<snapshots><enabled>false</enabled></snapshots>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>nexus-releases</id>
+			<name>Nexus Plugin Repository</name>
+			<url>http://your-nexus-host/repository/maven-public/</url>
+			<releases><enabled>true</enabled></releases>
+			<snapshots><enabled>false</enabled></snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<!-- ============================================================ -->
+	<!-- 의존성 다운로드 플러그인 설정                                   -->
+	<!-- mvn dependency:resolve 또는 dependency:go-offline 으로 실행    -->
+	<!-- ============================================================ -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<configuration>
+					<includeScope>runtime</includeScope>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

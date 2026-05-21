@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri May 22 00:19:16 KST 2026
+@default-maven-default-http-blocker-http\://0.0.0.0/.lastUpdated=1779376755949
+http\://0.0.0.0/.error=Could not transfer artifact org.slf4j\:jul-to-slf4j\:jar\:2.0.9 from/to maven-default-http-blocker (http\://0.0.0.0/)\: Blocked mirror for repositories\: [nexus-releases (http\://your-nexus-host/repository/maven-public/, default, releases)]
+https\://repo.maven.apache.org/maven2/.lastUpdated=1779376756524

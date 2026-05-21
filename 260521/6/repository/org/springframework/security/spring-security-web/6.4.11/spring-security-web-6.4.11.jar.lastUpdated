@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri May 22 00:19:11 KST 2026
+@default-maven-default-http-blocker-http\://0.0.0.0/.lastUpdated=1779376750897
+http\://0.0.0.0/.error=Could not transfer artifact org.springframework.security\:spring-security-web\:jar\:6.4.11 from/to maven-default-http-blocker (http\://0.0.0.0/)\: Blocked mirror for repositories\: [nexus-releases (http\://your-nexus-host/repository/maven-public/, default, releases)]
+https\://repo.maven.apache.org/maven2/.lastUpdated=1779376751309

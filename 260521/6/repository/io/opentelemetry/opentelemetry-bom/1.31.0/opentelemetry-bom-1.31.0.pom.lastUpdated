@@ -1,0 +1,11 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri May 22 00:15:20 KST 2026
+@default-nexus-releases-http\://your-nexus-host/repository/maven-public/.lastUpdated=1779376520033
+http\://your-nexus-host/repository/maven-public/.error=Could not transfer artifact io.opentelemetry\:opentelemetry-bom\:pom\:1.31.0 from/to nexus-releases (http\://your-nexus-host/repository/maven-public/)\: your-nexus-host
+https\://oss.sonatype.org/content/repositories/snapshots/.error=
+https\://oss.sonatype.org/content/repositories/snapshots/.lastUpdated=1779376520256
+https\://repo.maven.apache.org/maven2/.lastUpdated=1779376520947
+https\://repo.spring.io/milestone/.error=
+https\://repo.spring.io/milestone/.lastUpdated=1779376520545
+https\://repo.spring.io/snapshot/.error=
+https\://repo.spring.io/snapshot/.lastUpdated=1779376520895

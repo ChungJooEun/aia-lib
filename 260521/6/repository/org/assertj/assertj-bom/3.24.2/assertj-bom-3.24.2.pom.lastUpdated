@@ -1,0 +1,11 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri May 22 00:14:58 KST 2026
+@default-nexus-releases-http\://your-nexus-host/repository/maven-public/.lastUpdated=1779376495418
+http\://your-nexus-host/repository/maven-public/.error=Could not transfer artifact org.assertj\:assertj-bom\:pom\:3.24.2 from/to nexus-releases (http\://your-nexus-host/repository/maven-public/)\: your-nexus-host
+https\://oss.sonatype.org/content/repositories/snapshots/.error=
+https\://oss.sonatype.org/content/repositories/snapshots/.lastUpdated=1779376496168
+https\://repo.maven.apache.org/maven2/.lastUpdated=1779376498237
+https\://repo.spring.io/milestone/.error=
+https\://repo.spring.io/milestone/.lastUpdated=1779376497695
+https\://repo.spring.io/snapshot/.error=
+https\://repo.spring.io/snapshot/.lastUpdated=1779376498163

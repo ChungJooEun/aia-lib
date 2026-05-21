@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri May 22 00:18:39 KST 2026
+@default-nexus-releases-http\://your-nexus-host/repository/maven-public/.lastUpdated=1779376719161
+http\://your-nexus-host/repository/maven-public/.error=Could not transfer artifact org.springframework.boot\:spring-boot-starter-validation\:jar\:3.4.10 from/to nexus-releases (http\://your-nexus-host/repository/maven-public/)\: your-nexus-host
+https\://repo.maven.apache.org/maven2/.lastUpdated=1779376719224
