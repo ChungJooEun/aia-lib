@@ -1,6 +1,0 @@
-#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Fri May 22 00:15:36 KST 2026
-@default-nexus-releases-http\://your-nexus-host/repository/maven-public/.lastUpdated=1779376535795
-http\://your-nexus-host/repository/maven-public/.error=Could not transfer artifact org.springframework.boot\:org.springframework.boot.gradle.plugin\:pom\:3.4.16 from/to nexus-releases (http\://your-nexus-host/repository/maven-public/)\: your-nexus-host
-https\://repo.maven.apache.org/maven2/.error=
-https\://repo.maven.apache.org/maven2/.lastUpdated=1779376536255

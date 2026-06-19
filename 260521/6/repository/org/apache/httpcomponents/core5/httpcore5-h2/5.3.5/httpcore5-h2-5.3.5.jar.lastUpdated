@@ -1,5 +1,0 @@
-#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Fri May 22 00:18:39 KST 2026
-@default-nexus-releases-http\://your-nexus-host/repository/maven-public/.lastUpdated=1779376718960
-http\://your-nexus-host/repository/maven-public/.error=Could not transfer artifact org.apache.httpcomponents.core5\:httpcore5-h2\:jar\:5.3.5 from/to nexus-releases (http\://your-nexus-host/repository/maven-public/)\: your-nexus-host
-https\://repo.maven.apache.org/maven2/.lastUpdated=1779376719158
